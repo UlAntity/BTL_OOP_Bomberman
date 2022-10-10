@@ -9,39 +9,59 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.graphics.Sprite;
 
-public class Bomber extends Entity {
+public class Bomber extends Movable {
     private GetKey getKey;
-    private int speed = 5;
+
+    boolean isMoving = false;
+    String lastMove = "Down";
+
+
     public Bomber(int x, int y, Image img, Scene scene) {
         super(x, y, img);
+        setSpeed(3);
         this.getKey = new GetKey(scene);
     }
 
     @Override
     public void update() {
-        if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
-            System.out.println("Right button pressed");
-            if(x < 590) x += speed;
-            System.out.println(x);
+        switch (lastMove) {
+            case "Up":
+                img = Sprite.player_up.getFxImage();
+                break;
+            case "Right":
+                img = Sprite.player_right.getFxImage();
+                break;
+            case "Left":
+                img = Sprite.player_left.getFxImage();
+                break;
+            default:
+                img = Sprite.player_down.getFxImage();
+                break;
+        }
+         if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
+            System.out.println("Right button pressed");            if(x < 590) goRight();
+            img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
+            lastMove = "Right";
         }
 
         if (getKey.isPressed(KeyCode.S) || getKey.isPressed(KeyCode.DOWN)) {
-            System.out.println("Down button pressed");
-            if(y < 420) y += speed;
-            System.out.println(y);
+            if(y < 420) goDown();
+            img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
+            lastMove = "Down";
         }
 
         if (getKey.isPressed(KeyCode.A) || getKey.isPressed(KeyCode.LEFT)) {
-            System.out.println("Left button pressed");
-            if(x > 22) x -= speed;
-            System.out.println(x);
+            if(x > 22) goLeft();
+            img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, left++, 20).getFxImage();
+            lastMove = "Left";
         }
 
         if (getKey.isPressed(KeyCode.W) ||  getKey.isPressed(KeyCode.UP)) {
-            System.out.println("Up button pressed");
-            if(y > 22) y -= speed;
-            System.out.println(y);
+            if(y > 22) goUp();
+            img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
+            lastMove = "Up";
         }
     }
 }
