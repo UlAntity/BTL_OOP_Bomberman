@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import Controller.GetKey;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -59,7 +60,7 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
         entities.add(bomberman);
     }
 
