@@ -17,7 +17,7 @@ public class Map {
 
     public static void createMap() {
         try {
-            File file = new File("C:\\Users\\ad\\Desktop\\New folder (2)\\BTL_OOP_Bomberman\\src\\uet\\oop\\bomberman\\Map.txt");
+            File file = new File("src/uet/oop/bomberman/Map.txt");
             Scanner scanner = new Scanner(file);
             int height = scanner.nextInt();
             height = scanner.nextInt();
