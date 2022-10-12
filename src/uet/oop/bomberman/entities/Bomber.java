@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Movable {
@@ -41,25 +42,26 @@ public class Bomber extends Movable {
                 break;
         }
          if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
-            System.out.println("Right button pressed");            if(x < 590) goRight();
+            System.out.println("Right button pressed");
+            if(x < (BombermanGame.WIDTH - 1.5) * Sprite.SCALED_SIZE) goRight();
             img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
             lastMove = "Right";
         }
 
         if (getKey.isPressed(KeyCode.S) || getKey.isPressed(KeyCode.DOWN)) {
-            if(y < 420) goDown();
+            if(y < (BombermanGame.HEIGHT - 2) * Sprite.SCALED_SIZE) goDown();
             img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
             lastMove = "Down";
         }
 
         if (getKey.isPressed(KeyCode.A) || getKey.isPressed(KeyCode.LEFT)) {
-            if(x > 22) goLeft();
+            if(x > Sprite.SCALED_SIZE) goLeft();
             img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, left++, 20).getFxImage();
             lastMove = "Left";
         }
 
         if (getKey.isPressed(KeyCode.W) ||  getKey.isPressed(KeyCode.UP)) {
-            if(y > 22) goUp();
+            if(y > Sprite.SCALED_SIZE) goUp();
             img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
             lastMove = "Up";
         }

@@ -1,6 +1,5 @@
 package uet.oop.bomberman;
 
-import Controller.GetKey;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -16,16 +15,18 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import uet.oop.bomberman.Map;
 
 public class BombermanGame extends Application {
-    
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-    
+
+    public static int WIDTH;
+    public static int HEIGHT;
+
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -34,6 +35,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        Map.createMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -58,26 +60,11 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        createMap();
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
         entities.add(bomberman);
     }
 
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
-        }
-    }
 
     public void update() {
         entities.forEach(Entity::update);
