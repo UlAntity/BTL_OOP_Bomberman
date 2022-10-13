@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities;
 
+import Controller.Collision;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import Controller.GetKey;
@@ -10,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Movable {
@@ -27,6 +29,15 @@ public class Bomber extends Movable {
 
     @Override
     public void update() {
+        int mul = Sprite.SCALED_SIZE;
+        int centerX = x + mul / 3;
+        int centerY = y + mul / 2;
+        int diffX = Math.abs(centerX - Math.round(centerX / mul) * mul);
+        boolean inlineX = diffX > 3 && diffX < 29;
+        int diffY = Math.abs(centerY - Math.round(centerY / mul) * mul);
+        boolean inlineY = diffY > 10 && diffY < 22;
+
+        System.out.println(centerX + " " + centerY + " " + inlineX + " " + diffY);
         switch (lastMove) {
             case "Up":
                 img = Sprite.player_up.getFxImage();
@@ -43,25 +54,25 @@ public class Bomber extends Movable {
         }
          if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
             System.out.println("Right button pressed");
-            if(x < (BombermanGame.WIDTH - 1.5) * Sprite.SCALED_SIZE) goRight();
+            if(Map.getObject(Math.round((centerX + 10) / mul), Math.round(centerY / mul)) instanceof Grass && inlineY) goRight();
             img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
             lastMove = "Right";
         }
 
         if (getKey.isPressed(KeyCode.S) || getKey.isPressed(KeyCode.DOWN)) {
-            if(y < (BombermanGame.HEIGHT - 2) * Sprite.SCALED_SIZE) goDown();
+            if(Map.getObject(Math.round((centerX) / mul), Math.round((centerY + 16) / mul)) instanceof Grass && inlineX) goDown();
             img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
             lastMove = "Down";
         }
 
         if (getKey.isPressed(KeyCode.A) || getKey.isPressed(KeyCode.LEFT)) {
-            if(x > Sprite.SCALED_SIZE) goLeft();
+            if(Map.getObject(Math.round((centerX - 10) / mul), Math.round(centerY / mul)) instanceof Grass && inlineY) goLeft();
             img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, left++, 20).getFxImage();
             lastMove = "Left";
         }
 
         if (getKey.isPressed(KeyCode.W) ||  getKey.isPressed(KeyCode.UP)) {
-            if(y > Sprite.SCALED_SIZE) goUp();
+            if(Map.getObject(Math.round((centerX) / mul), Math.round((centerY - 16) / mul)) instanceof Grass && inlineX) goUp();
             img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
             lastMove = "Up";
         }
