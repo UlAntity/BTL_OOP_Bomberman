@@ -71,7 +71,7 @@ public class Map {
     public static Entity getObject(int i, int j) {
         Entity object = null;
         for(Entity entity : BombermanGame.stillObjects) {
-            if(entity.x / Sprite.SCALED_SIZE == i && entity.y / Sprite.SCALED_SIZE == j) {
+            if(entity.getX() / Sprite.SCALED_SIZE == i && entity.getY() / Sprite.SCALED_SIZE == j) {
                object = entity;
             }
         }
