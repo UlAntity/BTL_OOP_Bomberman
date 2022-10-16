@@ -16,15 +16,6 @@ public class SpriteSheet {
 	public int[] _pixels;
 	public BufferedImage image;
 
-	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
-	
-	public SpriteSheet(String path, int size) {
-		_path = path;
-		SIZE = size;
-		_pixels = new int[SIZE * SIZE];
-		load();
-	}
-	
 	private void load() {
 		try {
 			URL a = SpriteSheet.class.getResource(_path);
@@ -37,4 +28,13 @@ public class SpriteSheet {
 			System.exit(0);
 		}
 	}
+
+	public SpriteSheet(String path, int size) {
+		_path = path;
+		SIZE = size;
+		_pixels = new int[SIZE * SIZE];
+		load();
+	}
+
+	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
 }

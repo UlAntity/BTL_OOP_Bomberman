@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.scenes.MenuController">
+   <center>
+      <ImageView fitHeight="401.0" fitWidth="600.0" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../../../../res/img/background.png" />
+         </image>
+      </ImageView>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="208.0" layoutY="132.0" prefHeight="42.0" prefWidth="186.0" text="QUIT GAME" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <effect>
+                  <Glow level="1.0" />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="250.0" layoutY="79.0" prefHeight="42.0" prefWidth="101.0" text="START">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <effect>
+                  <Glow level="1.0" />
+               </effect>
+            </Label>
+            <Button fx:id="startButton" layoutX="248.0" layoutY="76.0" mnemonicParsing="false" onAction="#startButtonOnAction" prefHeight="44.0" prefWidth="102.0" text="Start" visible="false" />
+            <Button fx:id="quitButton" layoutX="221.0" layoutY="132.0" mnemonicParsing="false" onAction="#quitButtonOnAction" prefHeight="48.0" prefWidth="159.0" text="Quit" visible="false" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <top>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
