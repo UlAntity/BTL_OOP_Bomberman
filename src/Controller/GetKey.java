@@ -29,4 +29,5 @@ public class GetKey implements EventHandler<KeyEvent> {
     public boolean isPressed(KeyCode keyCode) {
         return activeKeys.contains(keyCode);
     }
+    public boolean isReleased(KeyCode keyCode) {return !activeKeys.contains(keyCode); }
 }

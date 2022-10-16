@@ -2,9 +2,7 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,43 +13,29 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import uet.oop.bomberman.Map;
 
 public class BombermanGame extends Application {
-    
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-    
+
+    public static int WIDTH;
+    public static int HEIGHT;
+
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
-    private static Stage stg;
+
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
-
     @Override
-    public void start(Stage stage) throws Exception {
-        stg = stage;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Menu.fxml")));
-        stage.setScene(new Scene(root, 600, 400));
-        stage.show();
-
-    }
-
-    // change scene through fxml
-    public void changeScene(String fxml) throws IOException {
-        Parent pane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxml)));
-        stg.getScene().setRoot(pane);
-    }
-
-    public void pseudoStart(Stage stage) {
+    public void start(Stage stage) {
+        Map.createMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
@@ -76,26 +60,11 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        createMap();
 
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
         entities.add(bomberman);
     }
 
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
-        }
-    }
 
     public void update() {
         entities.forEach(Entity::update);
