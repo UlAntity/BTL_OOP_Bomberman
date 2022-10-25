@@ -13,7 +13,14 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     public int y;
+    int layer;
+    public int getLayer() {
+        return layer;
+    }
 
+    public void setLayer(int layer) {
+        this.layer = layer;
+    }
     public int centerX = x + Sprite.SCALED_SIZE / 2;
     public int centerY = y + Sprite.SCALED_SIZE / 2;
     protected Image img;

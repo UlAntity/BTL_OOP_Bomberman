@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -27,6 +24,8 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
+    Bomber bomberman;
+    List<Bomb> bombs;
 
 
     public static void main(String[] args) {
@@ -61,19 +60,22 @@ public class BombermanGame extends Application {
         timer.start();
 
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
         entities.add(bomberman);
         System.out.println(Map.getObject(1,1));
+        bombs = bomberman.getBombs();
     }
 
 
     public void update() {
         entities.forEach(Entity::update);
+        bombs.forEach(Bomb::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        bombs.forEach(g -> g.render(gc));
     }
 }

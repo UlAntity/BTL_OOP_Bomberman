@@ -14,11 +14,15 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bomber extends Movable {
     private GetKey getKey;
 
     boolean isMoving = false;
     String lastMove = "Down";
+    private final List<Bomb> bombs = new ArrayList<>();
 
 
     public Bomber(int x, int y, Image img, Scene scene) {
@@ -76,5 +80,20 @@ public class Bomber extends Movable {
             img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
             lastMove = "Up";
         }
+
+        if(getKey.isPressed(KeyCode.SPACE)) {
+            placeBomb();
+            System.out.println("place");
+        }
+    }
+
+    public void placeBomb() {
+            int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
+            int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
+            bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage()));
+    }
+
+    public List<Bomb> getBombs() { // trả về list bomb
+        return bombs;
     }
 }
