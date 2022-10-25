@@ -20,12 +20,14 @@ public class BombermanGame extends Application {
     public static int HEIGHT;
 
 
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     Bomber bomberman;
-    List<Bomb> bombs;
+    public static List<Bomb> bombs;
+    public static List<Flame> flameList = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -70,6 +72,8 @@ public class BombermanGame extends Application {
     public void update() {
         entities.forEach(Entity::update);
         bombs.forEach(Bomb::update);
+        for (int i = 0; i < flameList.size(); i++)
+            flameList.get(i).update();
     }
 
     public void render() {
@@ -77,5 +81,6 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bombs.forEach(g -> g.render(gc));
+        flameList.forEach(g -> g.render(gc));
     }
 }

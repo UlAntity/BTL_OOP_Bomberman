@@ -83,7 +83,6 @@ public class Bomber extends Movable {
 
         if(getKey.isPressed(KeyCode.SPACE)) {
             placeBomb();
-            System.out.println("place");
         }
     }
 
