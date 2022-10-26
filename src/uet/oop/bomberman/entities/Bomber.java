@@ -14,8 +14,12 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static uet.oop.bomberman.BombermanGame.flameList;
+import static uet.oop.bomberman.BombermanGame.stillObjects;
 
 public class Bomber extends Movable {
     private GetKey getKey;
@@ -41,7 +45,7 @@ public class Bomber extends Movable {
         int diffY = Math.abs(centerY - Math.round(centerY / mul) * mul);
         boolean inlineY = diffY > 10 && diffY < 22;
 
-        System.out.println(centerX + " " + centerY + " " + inlineX + " " + diffY);
+        this.move();
         switch (lastMove) {
             case "Up":
                 img = Sprite.player_up.getFxImage();
@@ -57,7 +61,6 @@ public class Bomber extends Movable {
                 break;
         }
          if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
-            System.out.println("Right button pressed");
             if(Map.getObject(Math.round((centerX + 10) / mul), Math.round(centerY / mul)) instanceof Grass && inlineY) goRight();
             img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
             lastMove = "Right";
@@ -90,6 +93,21 @@ public class Bomber extends Movable {
             int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
             int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
             bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage()));
+    }
+
+    public Rectangle getBounds() { // tạo bao cho bomber
+        return new Rectangle(desX + 2, desY +5, Sprite.SCALED_SIZE - 10, Sprite.SCALED_SIZE * 3/4);
+    }
+
+    public static void checkCollisionFlame() {
+        for (int i = 0; i < flameList.size(); i++) {
+            Rectangle r1 = flameList.get(i).getBounds();
+            for (int j = 0; j < stillObjects.size(); j++) {
+                Rectangle r2 = stillObjects.get(j).getBounds();
+                if (r1.intersects(r2) && (stillObjects.get(j) instanceof Brick))
+                    stillObjects.get(j).setAlive(false);
+            }
+        }
     }
 
     public List<Bomb> getBombs() { // trả về list bomb

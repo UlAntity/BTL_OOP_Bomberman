@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.BombermanGame.stillObjects;
+
 public class Map {
 
     public static void createMap() {
@@ -28,50 +31,28 @@ public class Map {
             BombermanGame.HEIGHT = height;
             BombermanGame.WIDTH = width;
 
-            for (int i = 0; i < height; i++) {
-                String tempString = scanner.nextLine();
+            for (int i = 0; i < height; i++) { // quét các dòng tiếp rồi nhập hết vào string r để duyệt sau đó xuất ảnh đêt load map
+                String r = scanner.nextLine();
                 for (int j = 0; j < width; j++) {
-                    switch (tempString.charAt(j)) {
-                        case '#':
-                            object = new Wall(j, i, Sprite.wall.getFxImage());
-                            break;
-                        case '*':
-                            object = new Brick(j, i, Sprite.brick.getFxImage());
-                            break;
-                        // case 'x':
-                        //     tempList.add(new Portal(j, i, Sprite.portal.getFxImage()));
-                        default:
-                            object = new Grass(j, i, Sprite.grass.getFxImage());
-                            break;
+                    if (r.charAt(j) == '#') {
+                        stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
+                    } else {
+                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                        if (r.charAt(j) == '*') {
+                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
                     }
-                    BombermanGame.stillObjects.add(object);
                 }
             }
         } catch (FileNotFoundException exception) {
             System.out.println(exception.getMessage());
         }
-
-        /*
-        for (int i = 0; i < BombermanGame.WIDTH; i++) {
-            for (int j = 0; j < BombermanGame.HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == BombermanGame.HEIGHT - 1 || i == 0 || i == BombermanGame.WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                BombermanGame.stillObjects.add(object);
-            }
-        }
-
-         */
     }
 
     public static Entity getObject(int i, int j) {
         Entity object = null;
         for(Entity entity : BombermanGame.stillObjects) {
-            if(entity.x / Sprite.SCALED_SIZE == i && entity.y / Sprite.SCALED_SIZE == j) {
+            if(entity.getX() / Sprite.SCALED_SIZE == i && entity.getY() / Sprite.SCALED_SIZE == j) {
                object = entity;
             }
         }

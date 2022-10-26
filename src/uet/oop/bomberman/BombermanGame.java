@@ -71,9 +71,11 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+        stillObjects.forEach(Entity::update);
         bombs.forEach(Bomb::update);
         for (int i = 0; i < flameList.size(); i++)
             flameList.get(i).update();
+        bomberman.checkCollisionFlame();
     }
 
     public void render() {

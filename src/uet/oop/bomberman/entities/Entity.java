@@ -16,6 +16,8 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     public int y;
     int layer;
+    int time;
+    protected boolean alive;
     public int getLayer() {
         return layer;
     }
@@ -26,6 +28,7 @@ public abstract class Entity {
     public int centerX = x + Sprite.SCALED_SIZE / 2;
     public int centerY = y + Sprite.SCALED_SIZE / 2;
     protected Image img;
+
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -46,5 +49,21 @@ public abstract class Entity {
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
