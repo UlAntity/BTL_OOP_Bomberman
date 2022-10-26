@@ -27,6 +27,8 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
+    public static int level = 1;
+    public static boolean nextLevel = false;
 
 
     public static void main(String[] args) {
@@ -54,16 +56,25 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                if(nextLevel) {
+                    stillObjects.clear();
+                    entities.clear();
+                    Map.createMap();
+                    bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+                    entities.add(bomberman);
+                    nextLevel = false;
+                }
                 render();
                 update();
             }
         };
+
+
         timer.start();
         scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
 
-
-        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         System.out.println(Map.getObject(1,1));
         bombs = bomberman.getBombs();
@@ -71,13 +82,14 @@ public class BombermanGame extends Application {
 
 
     public void update() {
+        System.out.println(level);
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
         bombs.forEach(Bomb::update);
         for (int i = 0; i < flameList.size(); i++)
             flameList.get(i).update();
-        Bomber.checkCollisionFlame();
-        Bomber.collisionsHandler();
+        Collisions.checkCollisionFlame();
+        Collisions.collisionsHandler();
     }
 
     public void render() {

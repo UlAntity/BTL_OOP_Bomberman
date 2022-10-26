@@ -17,7 +17,7 @@ public class Map {
 
     public static void createMap() {
         try {
-            File file = new File("src/uet/oop/bomberman/Map.txt");
+            File file = new File("src/Levels/level" + BombermanGame.level + ".txt");
             Scanner scanner = new Scanner(file);
             int height = scanner.nextInt();
             height = scanner.nextInt();

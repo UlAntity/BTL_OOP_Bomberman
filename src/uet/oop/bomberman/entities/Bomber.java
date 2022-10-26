@@ -1,43 +1,42 @@
 package uet.oop.bomberman.entities;
 
-import Controller.Collision;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import Controller.GetKey;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.*;
-
 public class Bomber extends Movable {
     private GetKey getKey;
 
-    boolean isMoving = false;
-    String lastMove = "Down";
     private KeyCode direction = null;
     private boolean placeBombCommand = false;
     private final List<Bomb> bombs = new ArrayList<>();
+    protected int radius;
+    boolean bombable;
+    boolean infibomb;
 
 
-    public Bomber(int x, int y, Image img, Scene scene) {
+    public Bomber(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
         setSpeed(3);
+        setRadius(1);
+        bombable = true;
+        infibomb = false;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     @Override
     public void update() {
+        System.out.println(bombable + " " + infibomb);
         this.move();
         if (direction == KeyCode.LEFT) {
             goLeft();
@@ -52,7 +51,9 @@ public class Bomber extends Movable {
             goDown();
         }
         if (placeBombCommand) {
-            placeBomb();
+            if(bombable || infibomb) {
+                placeBomb();
+            }
         }
     }
 
@@ -91,7 +92,7 @@ public class Bomber extends Movable {
     public void placeBomb() {
             int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
             int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
-            bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage()));
+            bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius));
     }
 
     public void goLeft() {
@@ -119,32 +120,6 @@ public class Bomber extends Movable {
         return new Rectangle(desX + 2, desY +5, Sprite.SCALED_SIZE - 10, Sprite.SCALED_SIZE * 3/4);
     }
 
-    public static void checkCollisionFlame() {
-        for (int i = 0; i < flameList.size(); i++) {
-            Rectangle r1 = flameList.get(i).getBounds();
-            for (int j = 0; j < stillObjects.size(); j++) {
-                Rectangle r2 = stillObjects.get(j).getBounds();
-                if (r1.intersects(r2) && (stillObjects.get(j) instanceof Brick))
-                    stillObjects.get(j).setAlive(false);
-            }
-        }
-    }
-
-    public static void collisionsHandler() {
-        Rectangle r1 = BombermanGame.bomberman.getBounds();
-        for (Entity stillObject : stillObjects) {
-            Rectangle r2 = stillObject.getBounds();
-            if (r1.intersects(r2)) {
-                System.out.println(stillObject + " " + stillObject.getLayer());
-                if(bomberman.getLayer() >= stillObject.getLayer()) {
-                    bomberman.move();
-                } else {
-                    bomberman.stay();
-                }
-                break;
-            }
-        }
-    }
     public List<Bomb> getBombs() { // trả về list bomb
         return bombs;
     }
