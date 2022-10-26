@@ -18,14 +18,13 @@ public class BombermanGame extends Application {
 
     public static int WIDTH;
     public static int HEIGHT;
-
+    public static Bomber bomberman;
 
 
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
-    Bomber bomberman;
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
 
@@ -60,6 +59,8 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
+        scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
+        scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
 
 
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
@@ -75,7 +76,8 @@ public class BombermanGame extends Application {
         bombs.forEach(Bomb::update);
         for (int i = 0; i < flameList.size(); i++)
             flameList.get(i).update();
-        bomberman.checkCollisionFlame();
+        Bomber.checkCollisionFlame();
+        Bomber.collisionsHandler();
     }
 
     public void render() {

@@ -18,74 +18,72 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.flameList;
-import static uet.oop.bomberman.BombermanGame.stillObjects;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends Movable {
     private GetKey getKey;
 
     boolean isMoving = false;
     String lastMove = "Down";
+    private KeyCode direction = null;
+    private boolean placeBombCommand = false;
     private final List<Bomb> bombs = new ArrayList<>();
 
 
     public Bomber(int x, int y, Image img, Scene scene) {
         super(x, y, img);
         setSpeed(3);
-        this.getKey = new GetKey(scene);
     }
 
     @Override
     public void update() {
-        int mul = Sprite.SCALED_SIZE;
-        int centerX = x + mul / 3;
-        int centerY = y + mul / 2;
-        int diffX = Math.abs(centerX - Math.round(centerX / mul) * mul);
-        boolean inlineX = diffX > 3 && diffX < 29;
-        int diffY = Math.abs(centerY - Math.round(centerY / mul) * mul);
-        boolean inlineY = diffY > 10 && diffY < 22;
-
         this.move();
-        switch (lastMove) {
-            case "Up":
-                img = Sprite.player_up.getFxImage();
-                break;
-            case "Right":
-                img = Sprite.player_right.getFxImage();
-                break;
-            case "Left":
-                img = Sprite.player_left.getFxImage();
-                break;
-            default:
-                img = Sprite.player_down.getFxImage();
-                break;
+        if (direction == KeyCode.LEFT) {
+            goLeft();
         }
-         if (getKey.isPressed(KeyCode.D) || getKey.isPressed(KeyCode.RIGHT)) {
-            if(Map.getObject(Math.round((centerX + 10) / mul), Math.round(centerY / mul)) instanceof Grass && inlineY) goRight();
-            img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
-            lastMove = "Right";
+        if (direction == KeyCode.RIGHT) {
+            goRight();
         }
-
-        if (getKey.isPressed(KeyCode.S) || getKey.isPressed(KeyCode.DOWN)) {
-            if(Map.getObject(Math.round((centerX) / mul), Math.round((centerY + 16) / mul)) instanceof Grass && inlineX) goDown();
-            img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
-            lastMove = "Down";
+        if (direction == KeyCode.UP) {
+            goUp();
         }
-
-        if (getKey.isPressed(KeyCode.A) || getKey.isPressed(KeyCode.LEFT)) {
-            if(Map.getObject(Math.round((centerX - 10) / mul), Math.round(centerY / mul)) instanceof Grass && inlineY) goLeft();
-            img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, left++, 20).getFxImage();
-            lastMove = "Left";
+        if (direction == KeyCode.DOWN) {
+            goDown();
         }
-
-        if (getKey.isPressed(KeyCode.W) ||  getKey.isPressed(KeyCode.UP)) {
-            if(Map.getObject(Math.round((centerX) / mul), Math.round((centerY - 16) / mul)) instanceof Grass && inlineX) goUp();
-            img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
-            lastMove = "Up";
-        }
-
-        if(getKey.isPressed(KeyCode.SPACE)) {
+        if (placeBombCommand) {
             placeBomb();
+        }
+    }
+
+    public void handleKeyPressedEvent(KeyCode keyCode) {
+
+        if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT
+                || keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) {
+            this.direction = keyCode;
+        }
+        if (keyCode == KeyCode.SPACE) {
+            placeBombCommand = true;
+        }
+    }
+
+    public void handleKeyReleasedEvent(KeyCode keyCode) {
+        if (direction == keyCode) {
+            if (direction == KeyCode.LEFT) {
+                img = Sprite.player_left.getFxImage();
+            }
+            if (direction == KeyCode.RIGHT) {
+                img = Sprite.player_right.getFxImage();
+            }
+            if (direction == KeyCode.UP) {
+                img = Sprite.player_up.getFxImage();
+            }
+            if (direction == KeyCode.DOWN) {
+                img = Sprite.player_down.getFxImage();
+            }
+            direction = null;
+        }
+        if (keyCode == KeyCode.SPACE) {
+            placeBombCommand = false;
         }
     }
 
@@ -94,6 +92,27 @@ public class Bomber extends Movable {
             int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
             bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage()));
     }
+
+    public void goLeft() {
+        super.goLeft();
+        img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, left++, 20).getFxImage();
+    }
+
+    public void goRight() {
+        super.goRight();
+        img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, right++, 20).getFxImage();
+    }
+
+    public void goUp() {
+        super.goUp();
+        img = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, up++, 20).getFxImage();
+    }
+
+    public void goDown() {
+        super.goDown();
+        img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, down++, 20).getFxImage();
+    }
+
 
     public Rectangle getBounds() { // tạo bao cho bomber
         return new Rectangle(desX + 2, desY +5, Sprite.SCALED_SIZE - 10, Sprite.SCALED_SIZE * 3/4);
@@ -110,6 +129,18 @@ public class Bomber extends Movable {
         }
     }
 
+    public static void collisionsHandler() {
+        Rectangle r1 = BombermanGame.bomberman.getBounds();
+        for (Entity stillObject : stillObjects) {
+            Rectangle r2 = stillObject.getBounds();
+            if (r1.intersects(r2)) {
+                if(stillObject instanceof Item) {
+                    speed = 5;
+                    stillObjects.remove(stillObject);
+                }
+            }
+        }
+    }
     public List<Bomb> getBombs() { // trả về list bomb
         return bombs;
     }

@@ -9,7 +9,7 @@ public class Movable extends Entity{
     protected int up = 0;
     protected int down = 0;
 
-    protected int speed;
+    protected static int speed;
 
     int desX = x;
     int desY = y;
@@ -23,8 +23,8 @@ public class Movable extends Entity{
 
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public static void setSpeed(int speed) {
+        Movable.speed = speed;
     }
 
     public void goRight() {

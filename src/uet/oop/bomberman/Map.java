@@ -1,10 +1,7 @@
 package uet.oop.bomberman;
 
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Brick;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -39,6 +36,22 @@ public class Map {
                     } else {
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         if (r.charAt(j) == '*') {
+                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
+                        if (r.charAt(j) == 'x') {
+                            stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
+                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
+                        if (r.charAt(j) == 'b') {
+                            stillObjects.add(new BombItem(j, i, Sprite.powerup_bombs.getFxImage()));
+                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
+                        if (r.charAt(j) == 'f') {
+                            stillObjects.add(new FlameItem(j, i, Sprite.powerup_flames.getFxImage()));
+                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
+                        if (r.charAt(j) == 's') {
+                            stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
                             stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         }
                     }
