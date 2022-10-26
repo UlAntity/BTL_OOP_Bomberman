@@ -32,6 +32,7 @@ public class Bomber extends Movable {
 
     public Bomber(int x, int y, Image img, Scene scene) {
         super(x, y, img);
+        setLayer(1);
         setSpeed(3);
     }
 
@@ -134,10 +135,13 @@ public class Bomber extends Movable {
         for (Entity stillObject : stillObjects) {
             Rectangle r2 = stillObject.getBounds();
             if (r1.intersects(r2)) {
-                if(stillObject instanceof Item) {
-                    speed = 5;
-                    stillObjects.remove(stillObject);
+                System.out.println(stillObject + " " + stillObject.getLayer());
+                if(bomberman.getLayer() >= stillObject.getLayer()) {
+                    bomberman.move();
+                } else {
+                    bomberman.stay();
                 }
+                break;
             }
         }
     }

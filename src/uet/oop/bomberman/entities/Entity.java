@@ -15,7 +15,7 @@ public abstract class Entity {
 
     //Tọa độ Y tính từ góc trái trên trong Canvas
     public int y;
-    int layer;
+    protected int layer;
     int time;
     protected boolean alive;
     public int getLayer() {

@@ -57,6 +57,7 @@ public class Map {
                     }
                 }
             }
+            stillObjects.sort(new Layer());
         } catch (FileNotFoundException exception) {
             System.out.println(exception.getMessage());
         }
