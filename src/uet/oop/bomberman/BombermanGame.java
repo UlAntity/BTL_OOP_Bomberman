@@ -12,7 +12,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
-import uet.oop.bomberman.Map;
 
 public class BombermanGame extends Application {
 
@@ -27,6 +26,7 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
+    public static List<Enemy1> enemies = new ArrayList<Enemy1>();
     public static int level = 1;
     public static boolean nextLevel = false;
 
@@ -101,6 +101,8 @@ public class BombermanGame extends Application {
             flameList.get(i).update();
         Collisions.checkCollisionFlame();
         Collisions.collisionsHandler();
+        Collisions.enemyHandler();
+        enemies.forEach(Enemy1::update);
     }
 
     public void render() {
@@ -111,5 +113,6 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         bombs.forEach(g -> g.render(gc));
         flameList.forEach(g -> g.render(gc));
+        enemies.forEach(g -> g.render(gc));
     }
 }

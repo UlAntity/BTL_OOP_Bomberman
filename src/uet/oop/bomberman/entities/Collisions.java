@@ -59,4 +59,20 @@ public class Collisions {
             }
         }
     }
+
+    public static void enemyHandler() {
+        for(Enemy1 enemy : enemies) {
+            Rectangle r1 = enemy.getBounds();
+            for (Entity stillObject : stillObjects) {
+                Rectangle r2 = stillObject.getBounds();
+                if (r1.intersects(r2)) {
+                    if (enemy.getLayer() >= stillObject.getLayer()) {
+                        enemy.move();
+                    } else {
+                        enemy.stay();
+                    }
+                }
+            }
+        }
+    }
 }

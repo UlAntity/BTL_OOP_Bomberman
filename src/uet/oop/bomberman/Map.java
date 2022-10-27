@@ -1,13 +1,10 @@
 package uet.oop.bomberman;
 
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -53,6 +50,10 @@ public class Map {
                         if (r.charAt(j) == 's') {
                             stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
                             stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        }
+
+                        if (r.charAt(j) == '1') {
+                            enemies.add(new Enemy1(j, i, Sprite.minvo_left1.getFxImage()));
                         }
                     }
                 }
