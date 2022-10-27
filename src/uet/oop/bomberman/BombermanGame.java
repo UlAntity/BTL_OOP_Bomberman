@@ -57,12 +57,14 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 if(nextLevel) {
-                    stillObjects.clear();
+                    resetLevel();
+                }
+
+                if(bomberman.revive) {
                     entities.clear();
-                    Map.createMap();
                     bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
                     entities.add(bomberman);
-                    nextLevel = false;
+                    bombs = bomberman.getBombs();
                 }
                 render();
                 update();
@@ -80,6 +82,15 @@ public class BombermanGame extends Application {
         bombs = bomberman.getBombs();
     }
 
+    public void resetLevel() {
+        stillObjects.clear();
+        entities.clear();
+        Map.createMap();
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        entities.add(bomberman);
+        bombs = bomberman.getBombs();
+        nextLevel = false;
+    }
 
     public void update() {
         System.out.println(level);

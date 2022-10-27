@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Bomber extends Movable {
     private GetKey getKey;
 
@@ -19,6 +20,8 @@ public class Bomber extends Movable {
     protected int radius;
     boolean bombable;
     boolean infibomb;
+    public static boolean revive;
+    protected int dieHandler = 0;
 
 
     public Bomber(int x, int y, Image img) {
@@ -28,6 +31,8 @@ public class Bomber extends Movable {
         setRadius(1);
         bombable = true;
         infibomb = false;
+        revive = false;
+        setAlive(true);
     }
 
     public void setRadius(int radius) {
@@ -36,7 +41,6 @@ public class Bomber extends Movable {
 
     @Override
     public void update() {
-        System.out.println(bombable + " " + infibomb);
         this.move();
         if (direction == KeyCode.LEFT) {
             goLeft();
@@ -55,8 +59,19 @@ public class Bomber extends Movable {
                 placeBomb();
             }
         }
+        if(!isAlive()) {
+            dieHandler++;
+            bomberDie();
+        }
     }
 
+    public void bomberDie() {
+        if(dieHandler <= 60) {
+            img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
+                    Sprite.player_dead3, dieHandler, 20).getFxImage();
+        } else revive = true;
+
+    }
     public void handleKeyPressedEvent(KeyCode keyCode) {
 
         if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT

@@ -1,8 +1,11 @@
 package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -15,8 +18,14 @@ public class Collisions {
                 if (r1.intersects(r2) && (stillObjects.get(j) instanceof Brick))
                     stillObjects.get(j).setAlive(false);
             }
+
+            Rectangle r2 = bomberman.getBounds();
+            if (r1.intersects(r2)) {
+                bomberman.setAlive(false);
+            }
         }
     }
+
 
     public static void collisionsHandler() {
         Rectangle r1 = BombermanGame.bomberman.getBounds();
