@@ -49,6 +49,18 @@ public class Enemy1 extends Enemy{
         img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, right++, 15).getFxImage();
     }
 
+
+    public void goUp() {
+        super.goUp();
+        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, right++, 15).getFxImage();
+    }
+
+    @Override
+    public void goDown() {
+        super.goDown();
+        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, Sprite.balloom_right3, right++, 15).getFxImage();
+    }
+
     @Override
     public void stay() {
         super.stay();

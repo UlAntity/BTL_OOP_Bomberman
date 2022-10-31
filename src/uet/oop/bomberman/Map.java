@@ -51,9 +51,12 @@ public class Map {
                             stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
                             stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         }
-
                         if (r.charAt(j) == '1') {
                             enemies.add(new Enemy1(j, i, Sprite.balloom_right1.getFxImage()));
+                        }
+
+                        if (r.charAt(j) == '2') {
+                            enemies.add(new Enemy2(j, i, Sprite.oneal_right1.getFxImage()));
                         }
                     }
                 }

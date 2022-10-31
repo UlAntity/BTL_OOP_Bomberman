@@ -60,6 +60,7 @@ public class Bomber extends Movable {
             }
         }
         if(!isAlive()) {
+            this.stay();
             dieHandler++;
             bomberDie();
         }

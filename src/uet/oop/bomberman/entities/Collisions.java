@@ -24,7 +24,7 @@ public class Collisions {
                 bomberman.setAlive(false);
             }
 
-            for(Enemy1 enemy : enemies) {
+            for(Enemy enemy : enemies) {
                 Rectangle r3 = enemy.getBounds();
                 if (r1.intersects(r3)) {
                     enemy.setAlive(false);
@@ -70,8 +70,12 @@ public class Collisions {
     }
 
     public static void enemyHandler() {
-        for(Enemy1 enemy : enemies) {
+        Rectangle r3 = bomberman.getBounds();
+        for(Enemy enemy : enemies) {
             Rectangle r1 = enemy.getBounds();
+            if(r1.intersects(r3)) {
+                bomberman.setAlive(false);
+            }
             for (Entity stillObject : stillObjects) {
                 Rectangle r2 = stillObject.getBounds();
                 if (r1.intersects(r2)) {
@@ -81,6 +85,15 @@ public class Collisions {
                         enemy.stay();
                     }
                     break;
+                }
+            }
+
+            for (Bomb bomb : bombs) {
+                Rectangle r4 = bomb.getBounds();
+                if(r1.intersects(r4)) {
+                    enemy.stay();
+                } else {
+                    enemy.move();
                 }
             }
         }
