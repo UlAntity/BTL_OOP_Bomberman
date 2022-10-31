@@ -11,6 +11,9 @@ public class Movable extends Entity{
 
     protected int speed;
 
+    int desX = x;
+    int desY = y;
+
     public Movable(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -20,23 +23,37 @@ public class Movable extends Entity{
 
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
     public void goRight() {
-        this.x += speed;
+        desX = x + speed;
     }
 
     public void goLeft() {
-        this.x -= speed;
+        desX = x - speed;
     }
 
     public void goUp() {
-        this.y -= speed;
+        desY = y - speed;
     }
 
     public void goDown() {
-        this.y += speed;
+        desY = y + speed;
+    }
+
+    public void move() {
+        x = desX;
+        y = desY;
+    }
+
+    public void stay() {
+        desX = x;
+        desY = y;
     }
 }
