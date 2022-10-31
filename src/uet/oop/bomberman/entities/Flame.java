@@ -38,6 +38,11 @@ public class Flame extends Entity {
     }
 
     @Override
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, Sprite.SCALED_SIZE * 3/4, Sprite.SCALED_SIZE * 3/4);
+    }
+
+    @Override
     public void update(){ // phương thức kết thúc vụ nổ
         if(time < 20){ // thời gian flame kéo dài
             time++;

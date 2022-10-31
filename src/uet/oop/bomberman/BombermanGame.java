@@ -27,7 +27,7 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
-    public static List<Balloom> enemies = new ArrayList<Balloom>();
+    public static List<Enemy> enemies = new ArrayList<Enemy>();
     public static int level = 1;
     public static boolean nextLevel = false;
 
@@ -38,6 +38,8 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        entities.add(bomberman);
         Map.createMap();
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
@@ -82,8 +84,6 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
 
-        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
         bombs = bomberman.getBombs();
     }
 

@@ -1,9 +1,11 @@
 package uet.oop.bomberman.entities;
 
+
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
+import java.util.Random;
 
 public abstract class Enemy extends Movable{
     public Enemy(int x, int y, Image img) {
@@ -12,10 +14,19 @@ public abstract class Enemy extends Movable{
     }
 
 
-    public abstract void dead();
+    public void dead() {
+        img = Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead2, Sprite.mob_dead3, deadTime++, 90).getFxImage();
+    }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(desX + 2, desY +2, Sprite.SCALED_SIZE , Sprite.SCALED_SIZE * 9/10);
+        return new Rectangle(desX + 2, desY + 5, Sprite.SCALED_SIZE * 9/10, Sprite.SCALED_SIZE * 9/10);
+    }
+
+    //random int from 1 to 4
+    public int randomDirection() {
+        Random randMove = new Random();
+        return randMove.nextInt(4) + 1;
+
     }
 }

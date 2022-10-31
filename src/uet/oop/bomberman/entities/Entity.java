@@ -15,7 +15,7 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     public int y;
     protected int layer;
-    int time;
+    int time = 0;
     protected boolean alive;
 
     public int getLayer() {
@@ -25,6 +25,7 @@ public abstract class Entity {
     public void setLayer(int layer) {
         this.layer = layer;
     }
+    //Tọa độ trung tâm của sprite
     public int centerX = x + Sprite.SCALED_SIZE / 2;
     public int centerY = y + Sprite.SCALED_SIZE / 2;
     protected Image img;

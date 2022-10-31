@@ -3,45 +3,42 @@ package uet.oop.bomberman.entities;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.*;
-import java.util.Random;
-
 import static uet.oop.bomberman.BombermanGame.enemies;
 
-public class Balloom extends Enemy {
+public class Doll extends Enemy {
     int direction = randomDirection();
 
-    public Balloom(int x, int y, Image img) {
+    public Doll(int x, int y, Image img) {
         super(x, y, img);
-        setSpeed(1);
+        setSpeed(2);
         setAlive(true);
     }
 
     public void goLeft() {
         super.goLeft();
-        img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2,Sprite.balloom_left3, left++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2,Sprite.doll_left3, left++, 60).getFxImage();
     }
 
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2,Sprite.balloom_right3, right++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.doll_right1, Sprite.doll_right2,Sprite.doll_right3, right++, 60).getFxImage();
     }
 
     public void goUp() {
         super.goUp();
-        img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2,Sprite.balloom_left3, up++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2,Sprite.doll_left3, up++, 60).getFxImage();
     }
 
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2,Sprite.balloom_right3, down++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.doll_right1, Sprite.doll_right2,Sprite.doll_right3, down++, 60).getFxImage();
     }
 
     @Override
     public void dead() {
         setAlive(false);
         if (time < 50) {
-            img = Sprite.balloom_dead.getFxImage();
+            img = Sprite.doll_dead.getFxImage();
             time++;
         } else if (time < 120){
             super.dead();

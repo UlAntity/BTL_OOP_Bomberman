@@ -19,11 +19,8 @@ public class MenuController {
 
     public void startButtonOnAction() throws IOException {
 
-        BombermanGame main = new BombermanGame();
     }
 
     public void quitButtonOnAction () {
-        Stage stage = (Stage) quitButton.getScene().getWindow();
-        stage.close();
     }
 }

@@ -27,13 +27,14 @@ public class Bomber extends Movable {
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
-        setSpeed(2);
+        setSpeed(3);
         setRadius(1);
         bombable = true;
         infibomb = false;
         revive = false;
         setAlive(true);
     }
+
 
     public void setRadius(int radius) {
         this.radius = radius;
@@ -133,7 +134,7 @@ public class Bomber extends Movable {
 
 
     public Rectangle getBounds() { // tạo bao cho bomber
-        return new Rectangle(desX + 2, desY +5, Sprite.SCALED_SIZE - 10, Sprite.SCALED_SIZE * 3/4);
+        return new Rectangle(desX + 2, desY + 5, Sprite.SCALED_SIZE - 10, Sprite.SCALED_SIZE *3/4);
     }
 
     public List<Bomb> getBombs() { // trả về list bomb

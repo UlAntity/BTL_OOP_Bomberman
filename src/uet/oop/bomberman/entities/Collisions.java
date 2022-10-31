@@ -80,12 +80,13 @@ public class Collisions {
                 if (r1.intersects(r3)) {
                     if (enemy.getLayer() < bomb.getLayer()) {
                         enemy.stay();
+                    } else {
+                        enemy.move();
                     }
-                    break;
                 }
             }
             Rectangle r4 = bomberman.getBounds();
-            if (r1.intersects(r4)) {
+            if (r1.intersects(r4) && enemy.isAlive()) {
                 bomberman.setAlive(false);
             }
         }
