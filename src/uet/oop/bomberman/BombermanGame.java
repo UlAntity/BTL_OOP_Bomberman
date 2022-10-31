@@ -7,26 +7,29 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
-import uet.oop.bomberman.Map;
 
 public class BombermanGame extends Application {
 
     public static int WIDTH;
     public static int HEIGHT;
+    public static Bomber bomberman;
 
 
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Bomb> bombs;
+    public static List<Flame> flameList = new ArrayList<>();
+    public static List<Balloom> enemies = new ArrayList<Balloom>();
+    public static int level = 1;
+    public static boolean nextLevel = false;
 
 
     public static void main(String[] args) {
@@ -54,25 +57,65 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
-                update();
+                if(nextLevel) {
+                    resetLevel();
+                }
+
+                if(Bomber.revive) {
+                    entities.clear();
+                    bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+                    entities.add(bomberman);
+                    bombs = bomberman.getBombs();
+                }
+                try {
+                    render();
+                    update();
+                } catch (ConcurrentModificationException e) {
+                    // inevitable.
+                }
             }
+
         };
+
+
         timer.start();
+        scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
+        scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
 
-
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), scene);
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
+        bombs = bomberman.getBombs();
     }
 
+    public void resetLevel() {
+        stillObjects.clear();
+        entities.clear();
+        Map.createMap();
+        bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        entities.add(bomberman);
+        bombs = bomberman.getBombs();
+        nextLevel = false;
+    }
 
-    public void update() {
-        entities.forEach(Entity::update);
+    public void update() throws ConcurrentModificationException {
+            entities.forEach(Entity::update);
+            enemies.forEach(Enemy::update);
+            stillObjects.forEach(Entity::update);
+            bombs.forEach(Bomb::update);
+            for (Flame flame : flameList) flame.update();
+            Collisions.checkCollisionFlame();
+            Collisions.collisionsHandler();
+            Collisions.enemyHandler();
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        for(int i = stillObjects.size() - 1; i >= 0; i--) {
+            stillObjects.get(i).render(gc);
+        }
+        bombs.forEach(g -> g.render(gc));
+        enemies.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        flameList.forEach(g -> g.render(gc));
     }
 }
