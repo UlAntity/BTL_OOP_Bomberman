@@ -53,7 +53,7 @@ public class Map {
                         }
 
                         if (r.charAt(j) == '1') {
-                            enemies.add(new Enemy1(j, i, Sprite.minvo_left1.getFxImage()));
+                            enemies.add(new Enemy1(j, i, Sprite.balloom_right1.getFxImage()));
                         }
                     }
                 }
@@ -62,15 +62,5 @@ public class Map {
         } catch (FileNotFoundException exception) {
             System.out.println(exception.getMessage());
         }
-    }
-
-    public static Entity getObject(int i, int j) {
-        Entity object = null;
-        for(Entity entity : BombermanGame.stillObjects) {
-            if(entity.getX() / Sprite.SCALED_SIZE == i && entity.getY() / Sprite.SCALED_SIZE == j) {
-               object = entity;
-            }
-        }
-        return object;
     }
 }

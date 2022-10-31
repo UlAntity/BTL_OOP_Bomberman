@@ -78,7 +78,6 @@ public class BombermanGame extends Application {
 
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        System.out.println(Map.getObject(1,1));
         bombs = bomberman.getBombs();
     }
 
@@ -93,8 +92,8 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        System.out.println(level);
         entities.forEach(Entity::update);
+        enemies.forEach(Enemy1::update);
         stillObjects.forEach(Entity::update);
         bombs.forEach(Bomb::update);
         for (int i = 0; i < flameList.size(); i++)
@@ -102,7 +101,6 @@ public class BombermanGame extends Application {
         Collisions.checkCollisionFlame();
         Collisions.collisionsHandler();
         Collisions.enemyHandler();
-        enemies.forEach(Enemy1::update);
     }
 
     public void render() {
@@ -110,9 +108,9 @@ public class BombermanGame extends Application {
         for(int i = stillObjects.size() - 1; i >= 0; i--) {
             stillObjects.get(i).render(gc);
         }
-        entities.forEach(g -> g.render(gc));
         bombs.forEach(g -> g.render(gc));
-        flameList.forEach(g -> g.render(gc));
         enemies.forEach(g -> g.render(gc));
+        entities.forEach(g -> g.render(gc));
+        flameList.forEach(g -> g.render(gc));
     }
 }

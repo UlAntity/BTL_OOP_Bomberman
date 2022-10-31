@@ -23,6 +23,13 @@ public class Collisions {
             if (r1.intersects(r2)) {
                 bomberman.setAlive(false);
             }
+
+            for(Enemy1 enemy : enemies) {
+                Rectangle r3 = enemy.getBounds();
+                if (r1.intersects(r3)) {
+                    enemy.setAlive(false);
+                }
+            }
         }
     }
 
@@ -52,8 +59,10 @@ public class Collisions {
                 }
 
                 if(stillObject instanceof Portal) {
-                    level++;
-                    BombermanGame.nextLevel = true;
+                    if(enemies.size() == 0) {
+                        level++;
+                        BombermanGame.nextLevel = true;
+                    }
                 }
                 break;
             }
@@ -71,8 +80,10 @@ public class Collisions {
                     } else {
                         enemy.stay();
                     }
+                    break;
                 }
             }
         }
     }
+
 }
