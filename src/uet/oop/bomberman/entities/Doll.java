@@ -55,16 +55,16 @@ public class Doll extends Enemy {
     @Override
     public void update() {
         if (isAlive()) {
-            if (direction == 1) {
+            if (direction == 0) {
                 this.goLeft();
             }
-            if (direction == 2) {
+            if (direction == 1) {
                 this.goRight();
             }
-            if (direction == 3) {
+            if (direction == 2) {
                 this.goUp();
             }
-            if (direction == 4) {
+            if (direction == 3) {
                 this.goDown();
             }
         } else dead();

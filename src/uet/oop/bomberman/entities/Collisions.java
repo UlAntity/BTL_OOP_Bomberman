@@ -10,6 +10,8 @@ import java.util.TimerTask;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Collisions {
+
+
     public static void checkCollisionFlame() {
         for (Flame flame : flameList) {
             Rectangle r1 = flame.getBounds();
@@ -21,7 +23,7 @@ public class Collisions {
 
             Rectangle r2 = bomberman.getBounds();
             if (r1.intersects(r2)) {
-                bomberman.setAlive(false);
+                bomberman.setAlive(true);
             }
 
             for (Enemy enemy : enemies) {
@@ -79,9 +81,8 @@ public class Collisions {
                 Rectangle r3 = bomb.getBounds();
                 if (r1.intersects(r3)) {
                     if (enemy.getLayer() < bomb.getLayer()) {
+                        enemy.metBomb = true;
                         enemy.stay();
-                    } else {
-                        enemy.move();
                     }
                 }
             }

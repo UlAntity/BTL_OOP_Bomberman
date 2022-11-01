@@ -8,6 +8,9 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class Enemy extends Movable{
+
+    public boolean metBomb = false;
+
     public Enemy(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
@@ -20,13 +23,12 @@ public abstract class Enemy extends Movable{
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(desX + 2, desY + 5, Sprite.SCALED_SIZE * 9/10, Sprite.SCALED_SIZE * 9/10);
+        return new Rectangle(desX + 4, desY + 4, Sprite.SCALED_SIZE * 9/10, Sprite.SCALED_SIZE * 9/10);
     }
 
     //random int from 1 to 4
     public int randomDirection() {
         Random randMove = new Random();
-        return randMove.nextInt(4) + 1;
-
+        return randMove.nextInt(4) ;
     }
 }

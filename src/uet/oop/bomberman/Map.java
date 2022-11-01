@@ -55,6 +55,14 @@ public class Map {
                         if (r.charAt(j) == '1') {
                             enemies.add(new Balloom(j, i, Sprite.balloom_left1.getFxImage()));
                         }
+
+                        if (r.charAt(j) == '2') {
+                            enemies.add(new Oneal(j, i, Sprite.oneal_left1.getFxImage()));
+                        }
+
+                        if (r.charAt(j) == '3') {
+                            enemies.add(new Doll(j, i, Sprite.doll_left1.getFxImage()));
+                        }
                     }
                 }
             }

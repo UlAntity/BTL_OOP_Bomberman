@@ -8,7 +8,7 @@ public class Movable extends Entity{
     protected int left = 0;
     protected int up = 0;
     protected int down = 0;
-
+    protected int deadTime = 0;
     protected int speed;
 
     int desX = x;
