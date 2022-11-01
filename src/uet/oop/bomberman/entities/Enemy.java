@@ -7,6 +7,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.awt.*;
 import java.util.Random;
 
+
 public abstract class Enemy extends Movable{
 
     public boolean metBomb = false;

@@ -23,7 +23,7 @@ public class Collisions {
 
             Rectangle r2 = bomberman.getBounds();
             if (r1.intersects(r2)) {
-                bomberman.setAlive(true);
+                bomberman.setAlive(false);
             }
 
             for (Enemy enemy : enemies) {
@@ -68,7 +68,9 @@ public class Collisions {
             Rectangle r1 = enemy.getBounds();
             for (Entity stillObject : stillObjects) {
                 Rectangle r2 = stillObject.getBounds();
-                if (r1.intersects(r2)) {
+                if (enemy instanceof Kondoria && stillObject instanceof Brick) {
+                    enemy.move();
+                } else if (r1.intersects(r2)) {
                     if (enemy.getLayer() >= stillObject.getLayer()) {
                         enemy.move();
                     } else {

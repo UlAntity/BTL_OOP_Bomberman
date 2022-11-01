@@ -63,6 +63,14 @@ public class Map {
                         if (r.charAt(j) == '3') {
                             enemies.add(new Doll(j, i, Sprite.doll_left1.getFxImage()));
                         }
+
+                        if (r.charAt(j) == '4') {
+                            enemies.add(new Minvo(j, i, Sprite.minvo_left1.getFxImage()));
+                        }
+
+                        if (r.charAt(j) == '5') {
+                            enemies.add(new Kondoria(j, i, Sprite.kondoria_left1.getFxImage()));
+                        }
                     }
                 }
             }
