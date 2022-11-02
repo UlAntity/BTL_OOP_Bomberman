@@ -20,11 +20,13 @@ public class BombermanGame extends Application {
     public static int WIDTH;
     public static int HEIGHT;
     public static Bomber bomberman;
+    public static boolean gameRunning = false; // test
+    public static Group root = new Group();
 
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
+    private static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
@@ -34,11 +36,13 @@ public class BombermanGame extends Application {
 
 
     public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
+        Application.launch(args);
     }
 
     @Override
     public void start(Stage stage) throws IOException {
+        gameRunning = true;
+
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         Map.createMap();
@@ -48,14 +52,16 @@ public class BombermanGame extends Application {
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
-        Group root = new Group();
+        // Group root = new Group();
         root.getChildren().add(canvas);
 
         // Tao scene
         Scene scene = new Scene(root);
+
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -88,7 +94,8 @@ public class BombermanGame extends Application {
         bombs = bomberman.getBombs();
     }
 
-    public void resetLevel() {
+    public static void resetLevel() {
+        gameRunning = true;
         stillObjects.clear();
         entities.clear();
         Map.createMap();

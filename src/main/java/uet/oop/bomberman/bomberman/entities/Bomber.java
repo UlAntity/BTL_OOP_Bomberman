@@ -23,7 +23,6 @@ public class Bomber extends Movable {
     public static boolean revive;
     protected int dieHandler = 0;
 
-
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
@@ -110,6 +109,7 @@ public class Bomber extends Movable {
             int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
             int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
             bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius));
+
     }
 
     public void goLeft() {
