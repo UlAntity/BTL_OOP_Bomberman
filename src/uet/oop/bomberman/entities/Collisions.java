@@ -2,11 +2,9 @@ package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Sound;
-import uet.oop.bomberman.graphics.Sprite;
+
 
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -30,6 +28,7 @@ public class Collisions {
             for (Enemy enemy : enemies) {
                 Rectangle r3 = enemy.getBounds();
                 if (r1.intersects(r3)) {
+                    BombermanGame.score += 5;
                     enemy.setAlive(false);
                 }
             }
@@ -49,6 +48,7 @@ public class Collisions {
                 }
 
                 if(stillObject instanceof Item) {
+                    BombermanGame.score += 50;
                     ((Item) stillObject).change();;
                     Sound.Eat.play();
                     stillObjects.remove(stillObject);
@@ -57,6 +57,8 @@ public class Collisions {
                 if(stillObject instanceof Portal) {
                     if(enemies.size() == 0) {
                         level++;
+                        Sound.Eat.play();
+                        BombermanGame.score += 200;
                         BombermanGame.nextLevel = true;
                     }
                 }

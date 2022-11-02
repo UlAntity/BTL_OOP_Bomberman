@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import Controller.GetKey;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -69,6 +70,7 @@ public class Bomber extends Movable {
 
     public void bomberDie() {
         Sound.Die.play();
+        BombermanGame.score -= 1;
         this.stay();
         if(dieHandler <= 60) {
             img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,

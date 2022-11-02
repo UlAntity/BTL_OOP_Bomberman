@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -33,6 +35,10 @@ public class BombermanGame extends Application {
     public static List<Enemy> enemies = new ArrayList<Enemy>();
     public static int level = 1;
     public static boolean nextLevel = false;
+    public static int score = 0;
+    public static int time = 0;
+    public static AnchorPane BarControl = new AnchorPane();
+    public static Bar bar = new Bar();
 
 
     public static void main(String[] args) {
@@ -45,15 +51,19 @@ public class BombermanGame extends Application {
         entities.add(bomberman);
         Map.createMap();
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT + 30);
         gc = canvas.getGraphicsContext2D();
-
+        BarControl.getChildren().addAll(new Rectangle(2,3));
+        bar.setPanel();
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
+        root.getChildren().add(BarControl);
+
 
         // Tao scene
         Scene scene = new Scene(root);
+
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -103,6 +113,12 @@ public class BombermanGame extends Application {
     }
 
     public void update() throws ConcurrentModificationException {
+            score = Math.max(score, 0);
+            bar.setPoint(score);
+            bar.setLevel(level);
+            bar.setRemain(enemies.size());
+            bar.setTimes(time / 60);
+            time++;
             entities.forEach(Entity::update);
             enemies.forEach(Enemy::update);
             stillObjects.forEach(Entity::update);
