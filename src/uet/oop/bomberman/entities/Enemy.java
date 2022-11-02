@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -19,6 +20,7 @@ public abstract class Enemy extends Movable{
 
 
     public void dead() {
+        Sound.Die.play();
         img = Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead2, Sprite.mob_dead3, deadTime++, 90).getFxImage();
     }
 

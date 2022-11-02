@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -49,6 +50,7 @@ public class Collisions {
 
                 if(stillObject instanceof Item) {
                     ((Item) stillObject).change();;
+                    Sound.Eat.play();
                     stillObjects.remove(stillObject);
                 }
 

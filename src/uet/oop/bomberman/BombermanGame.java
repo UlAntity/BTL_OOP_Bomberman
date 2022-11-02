@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
+import javax.print.attribute.standard.Media;
+import java.applet.AudioClip;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -55,6 +58,8 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        Sound.BG.loop();
+
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
