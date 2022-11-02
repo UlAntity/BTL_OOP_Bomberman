@@ -1,0 +1,13 @@
+.pane{
+    -fx-background-image: url("C:\Users\Dell\Desktop\Bomberman\src\main\resources\img\Full-01-01.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 992 416;
+    -fx-background-color: transparent;
+    -fx-background-position: center center;
+-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+.button{
+    -fx-alignment: center;
+
+}
