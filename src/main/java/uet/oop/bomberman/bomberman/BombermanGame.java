@@ -40,7 +40,7 @@ public class BombermanGame extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         gameRunning = true;
 
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -126,4 +126,5 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         flameList.forEach(g -> g.render(gc));
     }
+    //change nhẹ
 }
