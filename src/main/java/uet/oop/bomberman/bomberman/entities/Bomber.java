@@ -124,8 +124,10 @@ public class Bomber extends Movable {
         if (keyCode == KeyCode.P) {
             if (BombermanGame.gameState == playState) {
                 BombermanGame.gameState = pauseState;
+                Sound.BG.pauseMusic();
             } else if (BombermanGame.gameState == pauseState) {
                 BombermanGame.gameState = playState;
+                Sound.BG.continueMusic();
             }
         }
 

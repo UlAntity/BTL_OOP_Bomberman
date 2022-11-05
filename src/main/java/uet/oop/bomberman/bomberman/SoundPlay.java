@@ -8,6 +8,7 @@ public class SoundPlay extends JFrame {
 
     public int flag = 0;
     private Clip clip;
+    private long clipTimePosition;
     String soundFile;
     SoundPlay(String soundFile) {
         this.soundFile = soundFile;
@@ -30,7 +31,13 @@ public class SoundPlay extends JFrame {
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public void stop(){
+    public void pauseMusic() {
+        clipTimePosition = clip.getMicrosecondPosition();
         clip.stop();
     }
+    public void continueMusic() {
+        clip.setMicrosecondPosition(clipTimePosition);
+        clip.start();
+    }
+
 }
