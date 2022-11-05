@@ -49,6 +49,7 @@ public class Collisions {
                     BombermanGame.score += 50;
                     ((Item) stillObject).change();;
                     Sound.Eat.play();
+                    Sound.powerups.play();
                     stillObjects.remove(stillObject);
                 }
 

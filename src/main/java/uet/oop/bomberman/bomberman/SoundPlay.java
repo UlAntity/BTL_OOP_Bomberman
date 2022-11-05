@@ -31,6 +31,9 @@ public class SoundPlay extends JFrame {
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+    public void stop() {
+        clip.stop();
+    }
     public void pauseMusic() {
         clipTimePosition = clip.getMicrosecondPosition();
         clip.stop();

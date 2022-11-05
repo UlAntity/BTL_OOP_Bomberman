@@ -11,5 +11,7 @@ public class Sound {
     public static SoundPlay Xwalk = new SoundPlay("src/Sounds/HorizontalWalk.wav");
     public static SoundPlay Ywalk = new SoundPlay("src/Sounds/VerticalWalk.wav");
     public static SoundPlay LevelComplete = new SoundPlay("src/Sounds/LevelComplete.wav");
+    public static SoundPlay powerups = new SoundPlay("src/Sounds/PowerUps.wav");
+    public static SoundPlay titleScreen = new SoundPlay("src/Sounds/TitleScreen.wav");
 
 }
