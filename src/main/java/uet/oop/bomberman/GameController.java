@@ -58,7 +58,8 @@ public class GameController {
     public void retryButtonClick(ActionEvent actionEvent) {
     }
 
-    public void pauseButtonClick(ActionEvent actionEvent) {
+    public void pauseButtonClick(KeyCode keyCode) {
+
     }
 }
 

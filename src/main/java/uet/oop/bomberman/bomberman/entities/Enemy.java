@@ -2,7 +2,9 @@ package uet.oop.bomberman.bomberman.entities;
 
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.bomberman.Sound;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
+
 
 import java.awt.*;
 import java.util.Random;
@@ -19,6 +21,7 @@ public abstract class Enemy extends Movable{
 
 
     public void dead() {
+        Sound.Die.play();
         img = Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead2, Sprite.mob_dead3, deadTime++, 90).getFxImage();
     }
 
