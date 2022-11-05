@@ -12,6 +12,7 @@ public class BombItem extends Item {
 
     @Override
     public void change() {
+        bomberman.isInfibomb = true;
         bomberman.infibomb = true;
     }
 

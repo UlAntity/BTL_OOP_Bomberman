@@ -1,9 +1,10 @@
 package uet.oop.bomberman.bomberman.entities;
 
-
 import uet.oop.bomberman.bomberman.BombermanGame;
+import uet.oop.bomberman.bomberman.Sound;
 
 import java.awt.*;
+
 import static uet.oop.bomberman.bomberman.BombermanGame.*;
 public class Collisions {
 
@@ -25,6 +26,7 @@ public class Collisions {
             for (Enemy enemy : enemies) {
                 Rectangle r3 = enemy.getBounds();
                 if (r1.intersects(r3)) {
+                    BombermanGame.score += 5;
                     enemy.setAlive(false);
                 }
             }
@@ -44,18 +46,35 @@ public class Collisions {
                 }
 
                 if(stillObject instanceof Item) {
+                    BombermanGame.score += 50;
                     ((Item) stillObject).change();;
+                    Sound.Eat.play();
                     stillObjects.remove(stillObject);
                 }
 
                 if(stillObject instanceof Portal) {
                     if(enemies.size() == 0) {
                         level++;
+                        Sound.Eat.play();
+                        BombermanGame.score += 200;
                         BombermanGame.nextLevel = true;
                     }
                 }
                 break;
             }
+        }
+
+    }
+
+    public static void bombsOverlapHandle() {
+        Rectangle r1 = BombermanGame.bomberman.getBounds();
+        for (Entity bomb : bombs) {
+            Rectangle r2 = bomb.getBounds();
+            if (bomberman.infibomb && r1.intersects(r2)) {
+                bomberman.infibomb = false;
+                break;
+            }
+            else bomberman.infibomb = true;
         }
     }
 

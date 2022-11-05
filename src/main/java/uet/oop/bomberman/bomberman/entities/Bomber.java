@@ -1,14 +1,21 @@
 package uet.oop.bomberman.bomberman.entities;
 
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.bomberman.BombermanGame;
+import uet.oop.bomberman.bomberman.Sound;
 import uet.oop.bomberman.Controller.GetKey;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 
-
 import java.awt.*;
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import static uet.oop.bomberman.bomberman.BombermanGame.pauseState;
+import static uet.oop.bomberman.bomberman.BombermanGame.playState;
 
 
 public class Bomber extends Movable {
@@ -19,9 +26,11 @@ public class Bomber extends Movable {
     private final List<Bomb> bombs = new ArrayList<>();
     protected int radius;
     boolean bombable;
+    boolean isInfibomb = false;
     boolean infibomb;
     public static boolean revive;
     protected int dieHandler = 0;
+
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -55,7 +64,11 @@ public class Bomber extends Movable {
             goDown();
         }
         if (placeBombCommand) {
-            if(bombable || infibomb) {
+            if(!isInfibomb) {
+                if(bombable) {
+                    placeBomb();
+                }
+            } else if (infibomb) {
                 placeBomb();
             }
         }
@@ -66,6 +79,8 @@ public class Bomber extends Movable {
     }
 
     public void bomberDie() {
+        Sound.Die.play();
+        BombermanGame.score -= 1;
         this.stay();
         if(dieHandler <= 60) {
             img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
@@ -75,17 +90,20 @@ public class Bomber extends Movable {
     }
     public void handleKeyPressedEvent(KeyCode keyCode) {
 
-        if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT
-                || keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) {
-            this.direction = keyCode;
+        if (BombermanGame.gameState == playState) {
+            if (keyCode == KeyCode.LEFT || keyCode == KeyCode.RIGHT
+                    || keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) {
+                this.direction = keyCode;
+            }
+            if (keyCode == KeyCode.SPACE) {
+                placeBombCommand = true;
+            }
         }
-        if (keyCode == KeyCode.SPACE) {
-            placeBombCommand = true;
-        }
+
     }
 
     public void handleKeyReleasedEvent(KeyCode keyCode) {
-        if (direction == keyCode) {
+        if (direction == keyCode && BombermanGame.gameState == playState) {
             if (direction == KeyCode.LEFT) {
                 img = Sprite.player_left.getFxImage();
             }
@@ -103,13 +121,21 @@ public class Bomber extends Movable {
         if (keyCode == KeyCode.SPACE) {
             placeBombCommand = false;
         }
+        if (keyCode == KeyCode.P) {
+            if (BombermanGame.gameState == playState) {
+                BombermanGame.gameState = pauseState;
+            } else if (BombermanGame.gameState == pauseState) {
+                BombermanGame.gameState = playState;
+            }
+        }
+
     }
 
     public void placeBomb() {
-            int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
-            int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
-            bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius));
-
+        Sound.plant.play();
+        int xB = (int) Math.round((x + 4) / (double) Sprite.SCALED_SIZE);
+        int yB = (int) Math.round((y + 4) / (double) Sprite.SCALED_SIZE);
+        bombs.add(new Bomb(xB, yB, Sprite.bomb.getFxImage(), radius));
     }
 
     public void goLeft() {
