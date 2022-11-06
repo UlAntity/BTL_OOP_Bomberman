@@ -2,16 +2,21 @@ package uet.oop.bomberman.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.GameController;
+import uet.oop.bomberman.MainGame;
 import uet.oop.bomberman.bomberman.entities.*;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -27,6 +32,8 @@ public class BombermanGame extends Application {
     public static final int playState = 1;
     public static final int pauseState = 2;
 
+    public static Stage stage = new Stage();
+    public static Group root = new Group();
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -49,6 +56,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         gameInnit = true;
         gameState = playState;
 
@@ -61,7 +69,7 @@ public class BombermanGame extends Application {
         BarControl.getChildren().addAll(new Rectangle(2,3));
         bar.setPanel();
         // Tao root container
-        Group root = new Group();
+
         root.getChildren().add(canvas);
         root.getChildren().add(BarControl);
 
@@ -91,6 +99,8 @@ public class BombermanGame extends Application {
                     update();
                 } catch (ConcurrentModificationException e) {
                     // inevitable.
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
@@ -113,7 +123,7 @@ public class BombermanGame extends Application {
         nextLevel = false;
     }
 
-    public void update() throws ConcurrentModificationException {
+    public void update() throws ConcurrentModificationException, IOException {
         if (gameState == playState)
         {
             score = Math.max(score, 0);
@@ -121,6 +131,7 @@ public class BombermanGame extends Application {
             bar.setLevel(level);
             bar.setRemain(enemies.size());
             bar.setTimes(time / 60);
+            bar.setStatus(bomberman.invincible);
             time++;
             entities.forEach(Entity::update);
             enemies.forEach(Enemy::update);
@@ -130,9 +141,6 @@ public class BombermanGame extends Application {
             Collisions.collisionsHandler();
             Collisions.checkCollisionFlame();
             Collisions.enemyHandler();
-        }
-        else {
-            //working
         }
     }
 
@@ -146,4 +154,14 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         flameList.forEach(g -> g.render(gc));
     }
+
+//    public void pauseGame() throws IOException {
+//            Parent pause = FXMLLoader.load((MainGame.class.getResource("pauseScreen.fxml")));
+//            Scene pauseScreen = new Scene(pause, 992, 416);
+//            Sound.titleScreen.play();
+//            GameController.finalSteps(stage);
+//            stage.setScene(pauseScreen);
+//            stage.show();
+//    }
+
 }

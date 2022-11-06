@@ -25,8 +25,9 @@ public class Bomber extends Movable {
     private final List<Bomb> bombs = new ArrayList<>();
     protected int radius;
     boolean bombable;
-    boolean isInfibomb = false;
-    boolean infibomb;
+    public boolean isInfibomb = false;
+    public boolean infibomb;
+    public boolean invincible = false;
     public static boolean revive;
     protected int dieHandler = 0;
 
@@ -120,6 +121,11 @@ public class Bomber extends Movable {
         if (keyCode == KeyCode.SPACE) {
             placeBombCommand = false;
         }
+
+        if (keyCode == KeyCode.I) {
+            invincible = !invincible;
+        }
+
         if (keyCode == KeyCode.P) {
             if (BombermanGame.gameState == playState) {
                 BombermanGame.gameState = pauseState;

@@ -1,42 +1,44 @@
-package uet.oop.bomberman.bomberman.entities;
+package uet.oop.bomberman.bomberman.entities.Enemies;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.bomberman.entities.Enemy;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 import static java.lang.Math.abs;
 import static uet.oop.bomberman.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.bomberman.BombermanGame.enemies;
 
 
-public class Oneal extends Enemy {
+
+public class Kondoria extends Enemy {
     int aimingDir = direction();
     int direction = randomDirection();
     int count = 0;
     int bombEva = 0;
 
-    public Oneal(int x, int y, Image img) {
+    public Kondoria(int x, int y, Image img) {
         super(x, y, img);
-        setSpeed(2);
+        setSpeed(1);
         setAlive(true);
     }
 
     public void goLeft() {
         super.goLeft();
-        img = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, left++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, Sprite.kondoria_left3, left++, 60).getFxImage();
     }
 
     public void goRight() {
         super.goRight();
-        img = Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, right++, 60).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, Sprite.kondoria_right3, right++, 60).getFxImage();
     }
 
     public void goUp() {
         super.goUp();
-        img = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left3, up++, 40).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left3, up++, 40).getFxImage();
     }
 
     public void goDown() {
         super.goDown();
-        img = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left3, down++, 40).getFxImage();
+        img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left3, down++, 40).getFxImage();
     }
 
 
@@ -68,7 +70,7 @@ public class Oneal extends Enemy {
     public void dead() {
         setAlive(false);
         if (time < 50) {
-            img = Sprite.oneal_dead.getFxImage();
+            img = Sprite.kondoria_dead.getFxImage();
             time++;
         } else if (time < 120){
             super.dead();

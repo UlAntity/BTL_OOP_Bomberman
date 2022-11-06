@@ -1,6 +1,11 @@
 package uet.oop.bomberman.bomberman;
 
 import uet.oop.bomberman.bomberman.entities.*;
+import uet.oop.bomberman.bomberman.entities.Enemies.*;
+import uet.oop.bomberman.bomberman.entities.Items.BombItem;
+import uet.oop.bomberman.bomberman.entities.Items.FlameItem;
+import uet.oop.bomberman.bomberman.entities.Items.Portal;
+import uet.oop.bomberman.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 import java.io.File;
 import java.io.FileNotFoundException;

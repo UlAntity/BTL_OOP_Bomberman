@@ -11,14 +11,18 @@ import java.util.Random;
 
 
 public abstract class Enemy extends Movable{
-
+    public int lives = 1;
     public boolean metBomb = false;
+    public int secondChanceTime = 0;
 
     public Enemy(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
     }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 
     public void dead() {
         Sound.Die.play();

@@ -1,6 +1,7 @@
-package uet.oop.bomberman.bomberman.entities;
+package uet.oop.bomberman.bomberman.entities.Enemies;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.bomberman.entities.Enemy;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.bomberman.BombermanGame.enemies;
 
@@ -11,6 +12,7 @@ public class Doll extends Enemy {
         super(x, y, img);
         setSpeed(2);
         setAlive(true);
+        setLives(2);
     }
 
     public void goLeft() {

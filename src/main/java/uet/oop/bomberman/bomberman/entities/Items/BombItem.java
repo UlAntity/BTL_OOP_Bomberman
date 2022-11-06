@@ -1,6 +1,7 @@
-package uet.oop.bomberman.bomberman.entities;
+package uet.oop.bomberman.bomberman.entities.Items;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.bomberman.entities.Item;
 
 import static uet.oop.bomberman.bomberman.BombermanGame.bomberman;
 

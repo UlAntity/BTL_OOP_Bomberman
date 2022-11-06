@@ -16,6 +16,8 @@ public class Bar extends AnchorPane{
 
     public Label labelRemain;
 
+    public Label labelStatus;
+
     public Bar() {
         labelTime = new Label("TIME: ");
         labelTime.setLayoutX(32);
@@ -30,21 +32,27 @@ public class Bar extends AnchorPane{
         labelLevel.setTextFill(BLACK);
 
         labelPoint = new Label("POINT: ");
-        labelPoint.setLayoutX(400);
+        labelPoint.setLayoutX(380);
         labelPoint.setLayoutY(420);
         labelPoint.setFont(Font.font(18));
         labelPoint.setTextFill(BLACK);
 
         labelRemain = new Label("ENEMIES REMAIN: ");
-        labelRemain.setLayoutX(600);
+        labelRemain.setLayoutX(550);
         labelRemain.setLayoutY(420);
         labelRemain.setFont(Font.font(18));
         labelRemain.setTextFill(BLACK);
 
+        labelStatus = new Label("INVINCIBLE MODE : ");
+        labelStatus.setLayoutX(770);
+        labelStatus.setLayoutY(420);
+        labelStatus.setFont(Font.font(18));
+        labelStatus.setTextFill(BLACK);
+
 
     }
     public void setPanel() {
-        BombermanGame.BarControl.getChildren().addAll(labelTime,labelLevel, labelPoint,labelRemain);
+        BombermanGame.BarControl.getChildren().addAll(labelTime,labelLevel, labelPoint,labelRemain, labelStatus);
     }
     public void setLevel(int n) {
         labelLevel.setText("LEVEL : " + n);
@@ -60,5 +68,9 @@ public class Bar extends AnchorPane{
 
     public void setRemain(int n) {
         labelRemain.setText("ENEMIES REMAIN : " + n);
+    }
+
+    public void setStatus(boolean n) {
+        labelStatus.setText("INVINCIBLE MODE : " + ((n)? "ON" : "OFF"));
     }
 }

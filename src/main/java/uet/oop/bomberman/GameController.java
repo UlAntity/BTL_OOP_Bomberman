@@ -5,6 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,9 +31,6 @@ public class GameController {
 
     private Stage stage;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 
 
     public static void finalSteps(Stage window) {
@@ -47,7 +45,6 @@ public class GameController {
             finalSteps(window);
             game.start(window);
         }
-
     }
 
 
@@ -74,22 +71,15 @@ public class GameController {
         System.exit(0);
     }
 
-    public void retryButtonClick(KeyEvent event) {
-        if (event.getCode() == KeyCode.P) {
-            game.resetLevel();
-            //working
-        }
-    }
-
-    public static void pauseButtonClick(KeyEvent keyCode) throws IOException {
-        Stage stage = (Stage) (((Node) keyCode.getSource()).getScene().getWindow());
-        FXMLLoader pause = new FXMLLoader(GameController.class.getResource("pauseScreen.fxml"));
-        Parent root = pause.load();
-        Scene scene = root.getScene();
+    public void retryButtonClick(ActionEvent event) {
+        Group root = BombermanGame.root;
+        stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
         //working
     }
+
 
     public void mouseEntered(MouseEvent mouseEvent)  {
         Button button = (Button) mouseEvent.getSource();
@@ -102,5 +92,8 @@ public class GameController {
     }
 
 
+    public void continueGame(KeyEvent keyEvent) {
+        //working
+    }
 }
 
