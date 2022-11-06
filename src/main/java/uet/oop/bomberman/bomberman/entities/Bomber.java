@@ -130,6 +130,7 @@ public class Bomber extends Movable {
             if (BombermanGame.gameState == playState) {
                 BombermanGame.gameState = pauseState;
                 Sound.BG.pauseMusic();
+                //BombermanGame.pauseGame();
             } else if (BombermanGame.gameState == pauseState) {
                 BombermanGame.gameState = playState;
                 Sound.BG.continueMusic();

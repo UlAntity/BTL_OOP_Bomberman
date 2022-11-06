@@ -99,8 +99,6 @@ public class BombermanGame extends Application {
                     update();
                 } catch (ConcurrentModificationException e) {
                     // inevitable.
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             }
 
@@ -109,7 +107,6 @@ public class BombermanGame extends Application {
         timer.start();
         scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
-
         bombs = bomberman.getBombs();
     }
 
@@ -123,7 +120,7 @@ public class BombermanGame extends Application {
         nextLevel = false;
     }
 
-    public void update() throws ConcurrentModificationException, IOException {
+    public void update() throws ConcurrentModificationException {
         if (gameState == playState)
         {
             score = Math.max(score, 0);
@@ -155,8 +152,8 @@ public class BombermanGame extends Application {
         flameList.forEach(g -> g.render(gc));
     }
 
-//    public void pauseGame() throws IOException {
-//            Parent pause = FXMLLoader.load((MainGame.class.getResource("pauseScreen.fxml")));
+//    public static void pauseGame() {
+//            Parent pause = FXMLLoader.load((Objects.requireNonNull(MainGame.class.getResource("pauseScreen.fxml"))));
 //            Scene pauseScreen = new Scene(pause, 992, 416);
 //            Sound.titleScreen.play();
 //            GameController.finalSteps(stage);

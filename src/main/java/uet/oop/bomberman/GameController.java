@@ -27,9 +27,6 @@ import static uet.oop.bomberman.bomberman.BombermanGame.*;
 public class GameController {
 
     @FXML
-    BombermanGame game = new BombermanGame();
-
-    private Stage stage;
 
 
 
@@ -39,6 +36,7 @@ public class GameController {
     }
 
     public void playButtonClick (ActionEvent actionEvent) throws IOException {
+        BombermanGame game = new BombermanGame();
         Stage window = (Stage) (((Node) actionEvent.getSource()).getScene().getWindow());
         Sound.titleScreen.stop();
         if (!gameInnit) {
@@ -72,11 +70,10 @@ public class GameController {
     }
 
     public void retryButtonClick(ActionEvent event) {
-        Group root = BombermanGame.root;
-        stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        int tempLevel = BombermanGame.level;
+        System.out.println(tempLevel);
+        Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        Sound.titleScreen.stop();
         //working
     }
 

@@ -29,16 +29,15 @@ public class Collisions {
 
                 if (r1.intersects(r3)) {
                     enemy.time++;
-                    if (enemy.lives == 2) {
+                    if (enemy.lives > 1) {
                         enemy.secondChanceTime++;
-                        System.out.println(enemy.secondChanceTime);
-                        if (enemy.secondChanceTime == 1) {
-                            enemy.lives--;
-                        }
-                    } else if (enemy.lives == 1 && enemy.time > (36 * enemy.lives))  {
+                    }
+                    if (enemy.secondChanceTime == 0 || enemy.secondChanceTime > 40) {
+                        //enemy dies!
                         BombermanGame.score += 5;
                         enemy.setAlive(false);
                     }
+
                 }
             }
         }
