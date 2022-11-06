@@ -21,7 +21,7 @@ public class BombermanGame extends Application {
     public static int WIDTH;
     public static int HEIGHT;
     public static Bomber bomberman;
-    public static boolean gameRunning = false; // test
+    public static boolean gameInnit = false; // test
     //GAME TEST
     public static int gameState;
     public static final int playState = 1;
@@ -49,7 +49,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
-        gameRunning = true;
+        gameInnit = true;
         gameState = playState;
 
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -100,7 +100,6 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
 
-
         bombs = bomberman.getBombs();
     }
 
@@ -133,7 +132,7 @@ public class BombermanGame extends Application {
             Collisions.enemyHandler();
         }
         else {
-            //nothing
+            //working
         }
     }
 

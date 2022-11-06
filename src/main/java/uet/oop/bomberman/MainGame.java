@@ -17,11 +17,8 @@ public class MainGame extends Application {
 
         Parent menu = FXMLLoader.load((MainGame.class.getResource("menu.fxml")));
         Scene scene = new Scene(menu, 992, 416);
-        //String css = this.getClass().getResource("style.css").toExternalForm();
-        //scene.getStylesheets().add(css);
         Sound.titleScreen.play();
-        stage.setTitle("BOMBERMAN");
-        stage.getIcons().add(new Image("C:\\Users\\Dell\\Desktop\\Bomberman\\src\\main\\resources\\img\\icon.jpg"));
+        GameController.finalSteps(stage);
         stage.setScene(scene);
         stage.show();
     }

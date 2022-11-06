@@ -19,7 +19,6 @@ import static uet.oop.bomberman.bomberman.BombermanGame.playState;
 
 
 public class Bomber extends Movable {
-    private GetKey getKey;
 
     private KeyCode direction = null;
     private boolean placeBombCommand = false;
