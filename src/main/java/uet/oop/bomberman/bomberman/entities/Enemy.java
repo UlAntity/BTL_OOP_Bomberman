@@ -2,23 +2,30 @@ package uet.oop.bomberman.bomberman.entities;
 
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.bomberman.Sound;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
+
 
 import java.awt.*;
 import java.util.Random;
 
 
 public abstract class Enemy extends Movable{
-
+    public int lives = 1;
     public boolean metBomb = false;
+    public int secondChanceTime = 0;
 
     public Enemy(int x, int y, Image img) {
         super(x, y, img);
         setLayer(1);
     }
 
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 
     public void dead() {
+        Sound.Die.play();
         img = Sprite.movingSprite(Sprite.mob_dead1,Sprite.mob_dead2, Sprite.mob_dead3, deadTime++, 90).getFxImage();
     }
 

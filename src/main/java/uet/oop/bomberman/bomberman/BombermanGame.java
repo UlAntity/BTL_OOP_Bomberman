@@ -2,11 +2,17 @@ package uet.oop.bomberman.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import uet.oop.bomberman.GameController;
+import uet.oop.bomberman.MainGame;
 import uet.oop.bomberman.bomberman.entities.*;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 
@@ -20,40 +26,52 @@ public class BombermanGame extends Application {
     public static int WIDTH;
     public static int HEIGHT;
     public static Bomber bomberman;
-    public static boolean gameRunning = false; // test
-    public static Group root = new Group();
+    public static boolean gameInnit = false; // test
+    //GAME TEST
+    public static int gameState;
+    public static final int playState = 1;
+    public static final int pauseState = 2;
 
+    public static Stage stage = new Stage();
+    public static Group root = new Group();
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private static List<Entity> entities = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Bomb> bombs;
     public static List<Flame> flameList = new ArrayList<>();
     public static List<Enemy> enemies = new ArrayList<Enemy>();
     public static int level = 1;
     public static boolean nextLevel = false;
+    public static int score = 0;
+    public static int time = 0;
+    public static AnchorPane BarControl = new AnchorPane();
+    public static Bar bar = new Bar();
 
 
     public static void main(String[] args) {
-        Application.launch(args);
+        Application.launch(BombermanGame.class);
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        gameRunning = true;
+    public void start(Stage stage) {
+        this.stage = stage;
+        gameInnit = true;
+        gameState = playState;
 
         bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
         Map.createMap();
-
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT + 30);
         gc = canvas.getGraphicsContext2D();
-
+        BarControl.getChildren().addAll(new Rectangle(2,3));
+        bar.setPanel();
         // Tao root container
-        // Group root = new Group();
+
         root.getChildren().add(canvas);
+        root.getChildren().add(BarControl);
 
         // Tao scene
         Scene scene = new Scene(root);
@@ -61,6 +79,7 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        Sound.BG.loop();
 
 
         AnimationTimer timer = new AnimationTimer() {
@@ -69,7 +88,6 @@ public class BombermanGame extends Application {
                 if(nextLevel) {
                     resetLevel();
                 }
-
                 if(Bomber.revive) {
                     entities.clear();
                     bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -86,16 +104,13 @@ public class BombermanGame extends Application {
 
         };
 
-
         timer.start();
         scene.setOnKeyPressed(event -> bomberman.handleKeyPressedEvent(event.getCode()));
         scene.setOnKeyReleased(event -> bomberman.handleKeyReleasedEvent(event.getCode()));
-
         bombs = bomberman.getBombs();
     }
 
-    public static void resetLevel() {
-        gameRunning = true;
+    public void resetLevel() {
         stillObjects.clear();
         entities.clear();
         Map.createMap();
@@ -106,14 +121,24 @@ public class BombermanGame extends Application {
     }
 
     public void update() throws ConcurrentModificationException {
+        if (gameState == playState)
+        {
+            score = Math.max(score, 0);
+            bar.setPoint(score);
+            bar.setLevel(level);
+            bar.setRemain(enemies.size());
+            bar.setTimes(time / 60);
+            bar.setStatus(bomberman.invincible);
+            time++;
             entities.forEach(Entity::update);
             enemies.forEach(Enemy::update);
             stillObjects.forEach(Entity::update);
             bombs.forEach(Bomb::update);
             for (Flame flame : flameList) flame.update();
-            Collisions.checkCollisionFlame();
             Collisions.collisionsHandler();
+            Collisions.checkCollisionFlame();
             Collisions.enemyHandler();
+        }
     }
 
     public void render() {
@@ -126,4 +151,14 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         flameList.forEach(g -> g.render(gc));
     }
+
+//    public static void pauseGame() {
+//            Parent pause = FXMLLoader.load((Objects.requireNonNull(MainGame.class.getResource("pauseScreen.fxml"))));
+//            Scene pauseScreen = new Scene(pause, 992, 416);
+//            Sound.titleScreen.play();
+//            GameController.finalSteps(stage);
+//            stage.setScene(pauseScreen);
+//            stage.show();
+//    }
+
 }

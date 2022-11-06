@@ -2,6 +2,7 @@ package uet.oop.bomberman.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.bomberman.BombermanGame;
+import uet.oop.bomberman.bomberman.Sound;
 import uet.oop.bomberman.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.bomberman.BombermanGame.bomberman;
@@ -22,8 +23,10 @@ public class Bomb extends Entity{
 
     @Override
     public void update() {
+        Collisions.bombsOverlapHandle();
         bomberman.bombable = false;
         if(timeCounter ++ == 100) {
+            Sound.Boom.play();
             explodeUpgrade();
             bomberman.bombable = true;
             BombermanGame.bombs.remove(this);
